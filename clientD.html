@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D</title>
+</head>
+<body>
+    <button>get info</button>
+    <ul id="info"></ul>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script>
+        function addElement(l){
+            let $li = $(`<li>${l.name}, ${l.age}</li>`);
+            $('#info').append($li);
+        }
+        $('button').on('click', async function(){
+            try{
+                let res = await $.get('/students');
+                console.log(res);
+                res.list.forEach(x=>addElement(x));
+                $(this).text('done');
+                $(this).off('click');
+            }catch(e){
+                console.log(e);
+            }
+        })
+    </script>
+</body>
+</html>
